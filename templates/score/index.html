@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <div>
+      <ul>
+        <li><a href="">Home</a></li>
+        <li><a href="">Contact</a></li>
+        <li><a href="">About Us</a></li>
+      </ul>
+    </div>
+    {% if json_response.error %}
+    <div class="container">Sorry There is no matches today</div>
+    {% endif %} 
+
+
+        <div class="container" style="margin-left: 53.8%;">
+           <img src="{{league_logo}}" width="80px" height="80px" style="text-align: center;" alt="">
+           <p>{{league_name}}</p>
+       </div>
+    {% for result in json_response %}
+    <div class="container">
+
+        
+      <div class="app">
+       
+        <div class="header">
+          <span class="team team-left">
+            <span
+              ><img
+                src="{{result.team_home_badge}}"
+                class="badge badge-left"
+                alt=""
+            /></span>
+            <span class="name">{{result.match_hometeam_name}}</span>
+          </span>
+          {% if result.match_status %}
+          <span class="score"
+            >{{result.match_hometeam_ft_score}} -
+            {{result.match_awayteam_ft_score}}</span
+          >
+          {% else %}
+          <span class="score">{{result.match_time}}</span>
+          {% endif %}
+
+          <span class="team team-right">
+            <span class="name">{{result.match_awayteam_name}}</span>
+            <span
+              ><img
+                src="{{result.team_away_badge}}"
+                class="badge badge-right"
+                alt=""
+            /></span>
+          </span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+  
+  </body>
+</html>
